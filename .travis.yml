@@ -1,3 +1,5 @@
+env:
+- GH_TOKEN=37c8f161ddaeb411391151f6a51836f388f3af50
 language: node_js
 node_js:
   - "node"
