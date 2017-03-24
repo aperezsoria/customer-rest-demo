@@ -151,6 +151,7 @@ definitions:
         description: Customer birth date
       maritalStatus:
         type: string
+        description: Customer marital status
       handicapIndicator:
         type: string
       studiesDegree:

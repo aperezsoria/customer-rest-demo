@@ -210,7 +210,8 @@
           "description": "Customer birth date"
         },
         "maritalStatus": {
-          "type": "string"
+          "type": "string",
+          "description": "Customer marital status"
         },
         "handicapIndicator": {
           "type": "string"
