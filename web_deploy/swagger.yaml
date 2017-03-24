@@ -68,8 +68,7 @@ paths:
               birthDate: 1954/07/08
               gender: M
               maritalStatus: married
-              handicapIndicator: n
-              
+              handicapIndicator: 'n'
 definitions:
   Document:
     type: object
