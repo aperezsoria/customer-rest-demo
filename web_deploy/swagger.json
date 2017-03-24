@@ -1,0 +1,262 @@
+{
+  "swagger": "2.0",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "host": "customer.us.isban.com",
+  "basePath": "/api/v1",
+  "info": {
+    "description": "This is an **example** API to demontstrate Customer inheritance modelling\n",
+    "version": "1.0.0",
+    "title": "Customer API",
+    "contact": {
+      "email": "alvaro.perez@extern.isban.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "externalDocs": {
+    "description": "Swagger specification",
+    "url": "https://github.com/OAI/OpenAPI-Specification/blob/3.0.0-rc0/versions/3.0.md"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Customer",
+      "description": "Operations about customer"
+    }
+  ],
+  "paths": {
+    "/customers": {
+      "parameters": [
+        {
+          "name": "name",
+          "in": "query",
+          "description": "Locate customer by name",
+          "type": "string"
+        },
+        {
+          "name": "documentNumber",
+          "in": "query",
+          "description": "Locate customer by document number",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "Locate customers",
+        "description": "Customer locator services\n",
+        "operationId": "customerLocator",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Customer"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "customerId": "F1234567",
+                "customerType": "Person",
+                "name": "William Smith",
+                "address": [
+                  {
+                    "type": "official",
+                    "line1": "26 Marlborough Street, Suite 200, Boston MA, 02170"
+                  },
+                  {
+                    "type": "office",
+                    "line1": "57 Marlborough Street, Suite 200, Boston MA, 02170"
+                  }
+                ],
+                "officialDocument": {
+                  "documentNumber": 12345678,
+                  "documentState": "valid",
+                  "documentType": "passport"
+                },
+                "birthDate": "1954/07/08",
+                "gender": "M",
+                "maritalStatus": "married",
+                "handicapIndicator": "n"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Document": {
+      "type": "object",
+      "properties": {
+        "documentNumber": {
+          "type": "string",
+          "description": "Official document number"
+        },
+        "documentState": {
+          "type": "string",
+          "description": "State of the document"
+        },
+        "documentType": {
+          "type": "string",
+          "description": "\"type of official identificator:  The values supported can be retrieve with API_operation: CUSTOMER_DATA:GET/allowed_official_document_types_creation\"\n"
+        }
+      },
+      "required": [
+        "documentNumber",
+        "documentType"
+      ]
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Address type",
+          "type": "string",
+          "enum": [
+            "official",
+            "office"
+          ]
+        },
+        "line1": {
+          "description": "Address value",
+          "type": "string",
+          "example": "26 Marlborough Street, Suite 200, Boston MA, 02170"
+        }
+      },
+      "required": [
+        "type",
+        "line1"
+      ],
+      "example": {
+        "type": "official",
+        "line1": "26 Marlborough Street, Suite 200, Boston MA, 02170"
+      }
+    },
+    "Customer": {
+      "type": "object",
+      "properties": {
+        "customerId": {
+          "description": "Customer unique Id",
+          "type": "string"
+        },
+        "name": {
+          "description": "Customer name",
+          "type": "string",
+          "minLength": 4,
+          "example": "John78"
+        },
+        "address": {
+          "description": "Customer address",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Address"
+          }
+        },
+        "language": {
+          "type": "string",
+          "description": "Customer language in ISO format"
+        },
+        "email": {
+          "type": "string",
+          "description": "Customer email contact"
+        },
+        "customerType": {
+          "description": "Customer type",
+          "type": "string"
+        },
+        "officialDocument": {
+          "$ref": "#/definitions/Document"
+        }
+      },
+      "required": [
+        "customerId",
+        "name",
+        "address",
+        "customerType",
+        "email",
+        "officialDocument"
+      ],
+      "discriminator": "customerType"
+    },
+    "Person": {
+      "description": "Person type customer",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Customer"
+        },
+        {
+          "type": "object"
+        }
+      ],
+      "properties": {
+        "birthDate": {
+          "type": "string",
+          "description": "Customer birth date"
+        },
+        "maritalStatus": {
+          "type": "string"
+        },
+        "handicapIndicator": {
+          "type": "string"
+        },
+        "studiesDegree": {
+          "type": "string"
+        },
+        "jobType": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "M",
+            "F"
+          ],
+          "description": "Customer gender"
+        }
+      },
+      "required": [
+        "birthDate"
+      ]
+    },
+    "Entity": {
+      "description": "Entity type customer",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Customer"
+        },
+        {
+          "type": "object"
+        }
+      ],
+      "properties": {
+        "constitutionDate": {
+          "type": "string",
+          "description": "Company constitution date"
+        },
+        "constitutionState": {
+          "type": "string",
+          "description": "US state where the company was created"
+        }
+      },
+      "required": [
+        "constitutionDate"
+      ]
+    }
+  }
+}

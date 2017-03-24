@@ -1,5 +1,6 @@
 env:
-- GH_TOKEN=1c81c224001a5d5ef0f36bf345ab4c797f8b76b7
+- GH_TOKEN=28620a3efc51fa275a2f36cc35e0bb88108e4384
+- GITHUB_TOKEN=28620a3efc51fa275a2f36cc35e0bb88108e4384
 language: node_js
 node_js:
   - "node"
