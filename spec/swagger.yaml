@@ -61,8 +61,15 @@ paths:
                   line1: '26 Marlborough Street, Suite 200, Boston MA, 02170'
                 - type: office
                   line1: '57 Marlborough Street, Suite 200, Boston MA, 02170'
+              officialDocument:
+                documentNumber: 12345678
+                documentState: valid
+                documentType: passport
               birthDate: 1954/07/08
               gender: M
+              maritalStatus: married
+              handicapIndicator: n
+              
 definitions:
   Document:
     type: object
